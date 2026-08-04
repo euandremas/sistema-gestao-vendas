@@ -68,7 +68,38 @@
           <p>Veja todos os produtos disponíveis.</p>
         </div>
       </div>
+      <div class="catalogControls">
+        <div class="catalogSearch">
+          <label class="srOnly" for="buscaProduto">Buscar produto</label>
 
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="11" cy="11" r="6"></circle>
+            <path d="m16 16 4 4"></path>
+          </svg>
+
+          <input id="buscaProduto" type="search" placeholder="Buscar produto..." autocomplete="off" />
+        </div>
+
+        <div class="catalogSelect">
+          <label class="srOnly" for="filtroCategoria">Filtrar por categoria</label>
+
+          <select id="filtroCategoria">
+            <option value="todos">Todas as categorias</option>
+          </select>
+        </div>
+
+        <div class="catalogSelect">
+          <label class="srOnly" for="ordenacaoProdutos">Ordenar produtos</label>
+
+          <select id="ordenacaoProdutos">
+            <option value="padrao">Ordenar por</option>
+            <option value="menorPreco">Menor preço</option>
+            <option value="maiorPreco">Maior preço</option>
+            <option value="nomeAsc">Nome: A–Z</option>
+            <option value="nomeDesc">Nome: Z–A</option>
+          </select>
+        </div>
+      </div>
       <div id="listaProdutos" class="catalogPlaceholder">
         <span class="placeholderIcon" aria-hidden="true">
           <svg viewBox="0 0 24 24">
@@ -207,6 +238,7 @@
       <span aria-hidden="true">♥</span>
     </p>
   </footer>
+  <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
 
   <script src="./js/catalogo.js"></script>
   <script src="./js/desconto.js"></script>

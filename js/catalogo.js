@@ -1,86 +1,86 @@
 const produtos = [
     {
         id: 1,
-        nome: "Notebook Pro 15",
+        nome: "Notebook Dell Inspiron",
         categoria: "Informática",
         preco: 4299.9,
         imagem: "./img/produtos/notebook.jpg"
     },
     {
         id: 2,
-        nome: "Smartphone Max 5G",
+        nome: "Samsung Galaxy S25",
         categoria: "Smartphones",
-        preco: 2599.9,
+        preco: 4599.9,
         imagem: "./img/produtos/smartphone.jpg"
     },
     {
         id: 3,
-        nome: "Headset Bluetooth",
-        categoria: "Áudio",
-        preco: 299.9,
-        imagem: "./img/produtos/headset.jpg"
+        nome: "Apple iPhone 16",
+        categoria: "Smartphones",
+        preco: 6799.9,
+        imagem: "./img/produtos/iphone.jpg"
     },
     {
         id: 4,
-        nome: "Controle sem Fio",
-        categoria: "Games",
-        preco: 349.9,
-        imagem: "./img/produtos/controle.jpg"
+        nome: "Headset HyperX Cloud III",
+        categoria: "Áudio",
+        preco: 649.9,
+        imagem: "./img/produtos/headset.jpg"
     },
     {
         id: 5,
-        nome: "Smartwatch Fit",
-        categoria: "Wearables",
-        preco: 499.9,
-        imagem: "./img/produtos/smartwatch.jpg"
+        nome: "Teclado Mecânico Logitech",
+        categoria: "Periféricos",
+        preco: 549.9,
+        imagem: "./img/produtos/teclado.jpg"
     },
     {
         id: 6,
-        nome: "Câmera Digital",
-        categoria: "Fotografia",
-        preco: 1899.9,
-        imagem: "./img/produtos/camera.jpg"
+        nome: "Mouse Logitech G502",
+        categoria: "Periféricos",
+        preco: 399.9,
+        imagem: "./img/produtos/mouse.jpg"
     },
     {
         id: 7,
-        nome: "Monitor 24 Polegadas",
+        nome: "Monitor LG UltraWide",
         categoria: "Monitores",
-        preco: 899.9,
+        preco: 1899.9,
         imagem: "./img/produtos/monitor.jpg"
     },
     {
         id: 8,
-        nome: "Mouse Gamer",
-        categoria: "Periféricos",
-        preco: 179.9,
-        imagem: "./img/produtos/mouse.jpg"
+        nome: "Samsung Galaxy Watch",
+        categoria: "Wearables",
+        preco: 1599.9,
+        imagem: "./img/produtos/smartwatch.jpg"
     },
     {
         id: 9,
-        nome: "SSD 1 TB",
+        nome: "Controle Xbox Series",
+        categoria: "Games",
+        preco: 499.9,
+        imagem: "./img/produtos/controle.jpg"
+    },
+    {
+        id: 10,
+        nome: "SSD Kingston NV2 1 TB",
         categoria: "Armazenamento",
         preco: 449.9,
         imagem: "./img/produtos/ssd.jpg"
     },
     {
-        id: 10,
-        nome: "Impressora Multifuncional",
-        categoria: "Impressoras",
-        preco: 1099.9,
-        imagem: "./img/produtos/impressora.jpg"
-    },
-    {
         id: 11,
-        nome: "Power Bank 20.000 mAh",
-        categoria: "Acessórios",
-        preco: 229.9,
-        imagem: "./img/produtos/powerbank.jpg"
+        nome: "Câmera Canon EOS R50",
+        categoria: "Fotografia",
+        preco: 4899.9,
+        imagem: "./img/produtos/camera.jpg"
     },
     {
         id: 12,
-        nome: "Roteador Wi-Fi 6",
+        nome: "Roteador TP-Link Wi-Fi 6",
         categoria: "Redes",
-        preco: 399.9,
+        preco: 479.9,
         imagem: "./img/produtos/roteador.jpg"
     }
 ];
