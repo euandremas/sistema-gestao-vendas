@@ -1,118 +1,212 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Sistema de Gestão de Vendas</title>
+  <title>ClicSell | Marketplace</title>
 
-    <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/style.css" />
 </head>
 
 <body>
-
-    <header>
-        <div class="container">
-            <h1>Sistema de Gestão de Vendas</h1>
-
-            <p>
-                Gerencie produtos, calcule descontos e consulte endereços por CEP.
-            </p>
+  <header class="header">
+    <div class="container headerContent">
+      <div class="brand">
+        <div class="brandIcon" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="m4 3 7.5 17 2.2-6.1 6.3-2.2L4 3Z" />
+            <path d="M15 3v3" />
+            <path d="M20.5 6.5 18 9" />
+            <path d="M18 15h3" />
+          </svg>
         </div>
-    </header>
 
-    <main class="container">
+        <div>
+          <h1>ClicSell</h1>
+          <p>É só clicar e comprar.</p>
+          <p>Gerencie produtos, calcule descontos e consulte entregas com rapidez.</p>
+        </div>
+      </div>
 
-        <section id="catalogo">
+      <div class="themeControl">
+        <span id="themeIcon" class="themeIcon" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M20 15.5A8 8 0 1 1 8.5 4 6.5 6.5 0 0 0 20 15.5Z" />
+          </svg>
+        </span>
 
-            <h2>Catálogo de Produtos</h2>
+        <span id="themeText">Modo escuro</span>
 
-            <div id="listaProdutos">
+        <label class="themeSwitch">
+          <input id="themeToggle" type="checkbox" aria-label="Alternar entre modo claro e modo escuro" />
 
-            </div>
+          <span class="switchSlider"></span>
+        </label>
+      </div>
+    </div>
+  </header>
 
-        </section>
+  <main class="container mainContent">
+    <section id="catalogo" class="panel">
+      <div class="sectionHeader">
+        <div class="sectionIcon sectionIconBlue" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <rect x="5" y="7" width="14" height="13" rx="2" />
+            <path d="M9 7V5a3 3 0 0 1 6 0v2" />
+          </svg>
+        </div>
 
-        <section id="desconto">
+        <div>
+          <h2>Catálogo de Produtos</h2>
+          <p>Veja todos os produtos disponíveis.</p>
+        </div>
+      </div>
 
-            <h2>Calculadora de Desconto</h2>
+      <div id="listaProdutos" class="catalogPlaceholder">
+        <span class="placeholderIcon" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M6 7h12l1 12H5L6 7Z" />
+            <path d="M9 10a3 3 0 0 0 6 0" />
+          </svg>
+        </span>
 
-            <form id="formDesconto">
+        <p>Os produtos serão exibidos aqui.</p>
+      </div>
+    </section>
 
-                <label for="precoProduto">
-                    Preço do Produto
-                </label>
+    <section id="desconto" class="panel">
+      <div class="sectionHeader">
+        <div class="sectionIcon sectionIconPurple" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <rect x="5" y="3" width="14" height="18" rx="2" />
+            <path d="M8 7h8" />
+            <path d="M8 11h2M12 11h2M16 11h0" />
+            <path d="M8 15h2M12 15h2M16 15h0" />
+            <path d="M8 18h2M12 18h2M16 18h0" />
+          </svg>
+        </div>
 
-                <input
-                    type="number"
-                    id="precoProduto"
-                    placeholder="Ex.: 2500"
-                >
+        <div>
+          <h2>Calculadora de Desconto</h2>
+          <p>Informe o preço e o percentual de desconto para calcular o valor final.</p>
+        </div>
+      </div>
 
-                <label for="percentualDesconto">
-                    Desconto (%)
-                </label>
+      <form id="formDesconto" class="formGrid">
+        <div class="formGroup">
+          <label for="precoProduto">Preço do Produto</label>
 
-                <input
-                    type="number"
-                    id="percentualDesconto"
-                    placeholder="Ex.: 10"
-                >
+          <div class="inputWrapper">
+            <input id="precoProduto" name="precoProduto" type="number" min="0" step="0.01" placeholder="Ex.: 2500"
+              required />
 
-                <button type="submit">
-                    Calcular
-                </button>
+            <span class="inputSuffix">R$</span>
+          </div>
+        </div>
 
-            </form>
+        <div class="formGroup">
+          <label for="percentualDesconto">Desconto (%)</label>
 
-            <div id="resultadoDesconto">
+          <div class="inputWrapper">
+            <input id="percentualDesconto" name="percentualDesconto" type="number" min="0" max="100" step="0.01"
+              placeholder="Ex.: 10" required />
 
-            </div>
+            <span class="inputSuffix">%</span>
+          </div>
+        </div>
 
-        </section>
+        <button class="button buttonPurple" type="submit">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="5" y="3" width="14" height="18" rx="2" />
+            <path d="M8 7h8" />
+            <path d="M8 11h2M12 11h2M16 11h0" />
+            <path d="M8 15h2M12 15h2M16 15h0" />
+          </svg>
 
-        <section id="cep">
+          Calcular
+        </button>
+      </form>
 
-            <h2>Consulta de CEP</h2>
+      <div id="resultadoDesconto" class="resultBox">
+        <span class="resultIcon" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M20 13 11 22 2 13l9-9h6l3 3v6Z" />
+            <circle cx="15" cy="9" r="1" />
+          </svg>
+        </span>
 
-            <form id="formCep">
+        <p>O resultado aparecerá aqui.</p>
+      </div>
+    </section>
 
-                <label for="cepBusca">
-                    CEP
-                </label>
+    <section id="cep" class="panel">
+      <div class="sectionHeader">
+        <div class="sectionIcon sectionIconGreen" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 21s6-5.2 6-11a6 6 0 1 0-12 0c0 5.8 6 11 6 11Z" />
+            <circle cx="12" cy="10" r="2" />
+          </svg>
+        </div>
 
-                <input
-                    type="text"
-                    id="cepBusca"
-                    placeholder="00000-000"
-                >
+        <div>
+          <h2>Consulta de CEP</h2>
+          <p>Digite o CEP para buscar o endereço correspondente.</p>
+        </div>
+      </div>
 
-                <button type="submit">
-                    Buscar CEP
-                </button>
+      <form id="formCep" class="cepForm">
+        <div class="formGroup">
+          <label for="cepBusca">CEP</label>
 
-            </form>
+          <div class="inputWrapper">
+            <input id="cepBusca" name="cepBusca" type="text" inputmode="numeric" maxlength="9" placeholder="00000-000"
+              required />
 
-            <div id="resultadoCep">
+            <span class="inputSuffix inputIcon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <circle cx="11" cy="11" r="6" />
+                <path d="m16 16 4 4" />
+              </svg>
+            </span>
+          </div>
+        </div>
 
-            </div>
+        <button class="button buttonGreen" type="submit">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="11" cy="11" r="6" />
+            <path d="m16 16 4 4" />
+          </svg>
 
-        </section>
+          Buscar CEP
+        </button>
+      </form>
 
-    </main>
+      <div id="resultadoCep" class="resultBox">
+        <span class="resultIcon" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 21s6-5.2 6-11a6 6 0 1 0-12 0c0 5.8 6 11 6 11Z" />
+            <circle cx="12" cy="10" r="2" />
+          </svg>
+        </span>
 
-    <footer>
+        <p>O endereço será exibido aqui.</p>
+      </div>
+    </section>
+  </main>
 
-        <p>
-            Projeto desenvolvido para a disciplina Back-end Development.
-        </p>
+  <footer class="footer">
+    <p>
+      Projeto desenvolvido para a disciplina Back-end Development.
+      <span aria-hidden="true">♥</span>
+    </p>
+  </footer>
 
-    </footer>
-
-    <script src="./js/produtos.js"></script>
-    <script src="./js/desconto.js"></script>
-    <script src="./js/cep.js"></script>
-    <script src="./js/app.js"></script>
-
+  <script src="./js/produtos.js"></script>
+  <script src="./js/desconto.js"></script>
+  <script src="./js/cep.js"></script>
+  <script src="./js/main.js"></script>
 </body>
+
 </html>
