@@ -35,22 +35,36 @@
         </div>
       </div>
 
-      <div class="themeControl">
-        <span id="themeIcon" class="themeIcon" aria-hidden="true">
-          <svg viewBox="0 0 24 24">
-            <path d="M20 15.5A8 8 0 1 1 8.5 4 6.5 6.5 0 0 0 20 15.5Z" />
+      <div class="headerActions">
+        <button id="openCartButton" class="cartButton" type="button" aria-label="Abrir carrinho de compras">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 4h2l2.4 10.2a2 2 0 0 0 2 1.5h7.8a2 2 0 0 0 1.9-1.4L21 8H7"></path>
+            <circle cx="10" cy="20" r="1.5"></circle>
+            <circle cx="18" cy="20" r="1.5"></circle>
           </svg>
-        </span>
 
-        <span id="themeText">Modo escuro</span>
+          <span>Carrinho</span>
 
-        <label class="themeSwitch">
-          <input id="themeToggle" type="checkbox" aria-label="Alternar entre modo claro e modo escuro" />
+          <span id="cartCount" class="cartCount">0</span>
+        </button>
 
-          <span class="switchSlider"></span>
-        </label>
+        <div class="themeControl">
+          <span id="themeIcon" class="themeIcon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"></path>
+              <path class="themeSparkle" d="m17.5 3 .5 1.5L19.5 5 18 5.5 17.5 7 17 5.5 15.5 5 17 4.5 17.5 3Z"></path>
+            </svg>
+          </span>
+
+          <span id="themeText">Modo escuro</span>
+
+          <label class="themeSwitch">
+            <input id="themeToggle" type="checkbox" aria-label="Alternar entre modo claro e modo escuro" />
+
+            <span class="switchSlider"></span>
+          </label>
+        </div>
       </div>
-    </div>
   </header>
 
   <main class="container mainContent">
@@ -231,7 +245,51 @@
       </div>
     </section>
   </main>
+  <div id="cartOverlay" class="cartOverlay"></div>
 
+  <aside id="cartDrawer" class="cartDrawer" aria-labelledby="cartTitle" aria-hidden="true">
+    <div class="cartHeader">
+      <div>
+        <h2 id="cartTitle">Seu carrinho</h2>
+        <p>Revise os produtos selecionados.</p>
+      </div>
+
+      <button id="closeCartButton" class="closeCartButton" type="button" aria-label="Fechar carrinho">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="m6 6 12 12"></path>
+          <path d="m18 6-12 12"></path>
+        </svg>
+      </button>
+    </div>
+
+    <div id="cartEmpty" class="cartEmpty">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M3 4h2l2.4 10.2a2 2 0 0 0 2 1.5h7.8a2 2 0 0 0 1.9-1.4L21 8H7"></path>
+        <circle cx="10" cy="20" r="1.5"></circle>
+        <circle cx="18" cy="20" r="1.5"></circle>
+      </svg>
+
+      <strong>Seu carrinho está vazio</strong>
+      <p>Adicione produtos para começar.</p>
+    </div>
+
+    <div id="cartItems" class="cartItems"></div>
+
+    <div class="cartFooter">
+      <div class="cartTotalRow">
+        <span>Total</span>
+        <strong id="cartTotal">R$ 0,00</strong>
+      </div>
+
+      <button id="checkoutButton" class="button checkoutButton" type="button">
+        Finalizar compra
+      </button>
+
+      <button id="clearCartButton" class="clearCartButton" type="button">
+        Limpar carrinho
+      </button>
+    </div>
+  </aside>
   <footer class="footer">
     <p>
       Projeto desenvolvido para a disciplina Back-end Development.
@@ -243,6 +301,7 @@
   <script src="./js/catalogo.js"></script>
   <script src="./js/desconto.js"></script>
   <script src="./js/cep.js"></script>
+  <script src="./js/carrinho.js"></script>
   <script src="./js/main.js"></script>
 </body>
 

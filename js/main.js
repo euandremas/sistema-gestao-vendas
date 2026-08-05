@@ -1,5 +1,6 @@
 const themeToggle = document.getElementById("themeToggle");
 const themeText = document.getElementById("themeText");
+const themeIcon = document.getElementById("themeIcon");
 
 const buscaProdutoInput = document.getElementById("buscaProduto");
 const filtroCategoriaSelect = document.getElementById("filtroCategoria");
@@ -7,6 +8,14 @@ const ordenacaoProdutosSelect = document.getElementById("ordenacaoProdutos");
 
 const listaProdutos = document.getElementById("listaProdutos");
 const textoCatalogo = document.querySelector("#catalogo .sectionHeader p");
+
+const openCartButton = document.getElementById("openCartButton");
+const closeCartButton = document.getElementById("closeCartButton");
+const cartDrawer = document.getElementById("cartDrawer");
+const cartOverlay = document.getElementById("cartOverlay");
+const cartItems = document.getElementById("cartItems");
+const clearCartButton = document.getElementById("clearCartButton");
+const checkoutButton = document.getElementById("checkoutButton");
 
 const DARK_THEME_CLASS = "darkTheme";
 const THEME_STORAGE_KEY = "clicSellTheme";
@@ -17,9 +26,44 @@ let toastTimeout;
    TEMA
 =========================== */
 
+function updateThemeIcon(isDarkTheme) {
+  if (isDarkTheme) {
+    themeIcon.innerHTML = `
+      <svg viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="4"></circle>
+        <path d="M12 2v2"></path>
+        <path d="M12 20v2"></path>
+        <path d="m4.93 4.93 1.42 1.42"></path>
+        <path d="m17.65 17.65 1.42 1.42"></path>
+        <path d="M2 12h2"></path>
+        <path d="M20 12h2"></path>
+        <path d="m6.35 17.65-1.42 1.42"></path>
+        <path d="m19.07 4.93-1.42 1.42"></path>
+      </svg>
+    `;
+
+    themeIcon.classList.add("themeIconSun");
+    themeIcon.classList.remove("themeIconMoon");
+
+    return;
+  }
+
+  themeIcon.innerHTML = `
+    <svg viewBox="0 0 24 24">
+      <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"></path>
+      <path class="themeSparkle" d="m17.5 3 .5 1.5L19.5 5 18 5.5 17.5 7 17 5.5 15.5 5 17 4.5 17.5 3Z"></path>
+    </svg>
+  `;
+
+  themeIcon.classList.add("themeIconMoon");
+  themeIcon.classList.remove("themeIconSun");
+}
+
 function updateThemeControls(isDarkTheme) {
   themeToggle.checked = isDarkTheme;
   themeText.textContent = isDarkTheme ? "Modo claro" : "Modo escuro";
+
+  updateThemeIcon(isDarkTheme);
 }
 
 function applyTheme(theme) {
@@ -42,13 +86,27 @@ function getInitialTheme() {
   return prefersDarkTheme ? "dark" : "light";
 }
 
-themeToggle.addEventListener("change", () => {
-  const selectedTheme = themeToggle.checked ? "dark" : "light";
+/* ===========================
+   CARRINHO
+=========================== */
 
-  localStorage.setItem(THEME_STORAGE_KEY, selectedTheme);
+function abrirCarrinho() {
+  cartDrawer.classList.add("cartDrawerOpen");
+  cartOverlay.classList.add("cartOverlayVisible");
 
-  applyTheme(selectedTheme);
-});
+  cartDrawer.setAttribute("aria-hidden", "false");
+
+  document.body.classList.add("cartOpen");
+}
+
+function fecharCarrinho() {
+  cartDrawer.classList.remove("cartDrawerOpen");
+  cartOverlay.classList.remove("cartOverlayVisible");
+
+  cartDrawer.setAttribute("aria-hidden", "true");
+
+  document.body.classList.remove("cartOpen");
+}
 
 /* ===========================
    UTILITÁRIOS
@@ -288,12 +346,22 @@ function selecionarProduto(event) {
     return;
   }
 
-  exibirToast(`${produtoSelecionado.nome} foi selecionado.`);
+  adicionarAoCarrinho(produtoSelecionado);
+
+  exibirToast(`${produtoSelecionado.nome} foi adicionado ao carrinho.`);
 }
 
 /* ===========================
    EVENTOS
 =========================== */
+
+themeToggle.addEventListener("change", () => {
+  const selectedTheme = themeToggle.checked ? "dark" : "light";
+
+  localStorage.setItem(THEME_STORAGE_KEY, selectedTheme);
+
+  applyTheme(selectedTheme);
+});
 
 buscaProdutoInput.addEventListener("input", atualizarCatalogo);
 filtroCategoriaSelect.addEventListener("change", atualizarCatalogo);
@@ -301,8 +369,39 @@ ordenacaoProdutosSelect.addEventListener("change", atualizarCatalogo);
 
 listaProdutos.addEventListener("click", selecionarProduto);
 
+openCartButton.addEventListener("click", abrirCarrinho);
+closeCartButton.addEventListener("click", fecharCarrinho);
+cartOverlay.addEventListener("click", fecharCarrinho);
+
+cartItems.addEventListener("click", tratarAcoesCarrinho);
+
+clearCartButton.addEventListener("click", () => {
+  limparCarrinho();
+  exibirToast("Carrinho esvaziado.");
+});
+
+checkoutButton.addEventListener("click", () => {
+  if (carrinho.length === 0) {
+    exibirToast("Adicione produtos antes de finalizar a compra.");
+    return;
+  }
+
+  exibirToast("Fluxo de checkout será implementado nas próximas etapas.");
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    fecharCarrinho();
+  }
+});
+
+/* ===========================
+   INICIALIZAÇÃO
+=========================== */
+
 document.addEventListener("DOMContentLoaded", () => {
   applyTheme(getInitialTheme());
   preencherCategorias();
   renderizarProdutos(produtos);
+  atualizarCarrinho();
 });
