@@ -36,6 +36,19 @@
       </div>
 
       <div class="headerActions">
+        <button id="favoritesButton" class="favoritesButton" type="button"
+          aria-label="Mostrar somente produtos favoritos" aria-pressed="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z">
+            </path>
+          </svg>
+
+          <span>Favoritos</span>
+
+          <span id="favoritesCount" class="favoritesCount">0</span>
+        </button>
+
         <button id="openCartButton" class="cartButton" type="button" aria-label="Abrir carrinho de compras">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M3 4h2l2.4 10.2a2 2 0 0 0 2 1.5h7.8a2 2 0 0 0 1.9-1.4L21 8H7"></path>
@@ -43,7 +56,7 @@
             <circle cx="18" cy="20" r="1.5"></circle>
           </svg>
 
-          <span>Carrinho</span>
+          <span class="cartButtonText">Carrinho</span>
 
           <span id="cartCount" class="cartCount">0</span>
         </button>
@@ -302,6 +315,7 @@
   <script src="./js/desconto.js"></script>
   <script src="./js/cep.js"></script>
   <script src="./js/carrinho.js"></script>
+  <script src="./js/favoritos.js"></script>
   <script src="./js/main.js"></script>
 </body>
 

@@ -17,10 +17,13 @@ const cartItems = document.getElementById("cartItems");
 const clearCartButton = document.getElementById("clearCartButton");
 const checkoutButton = document.getElementById("checkoutButton");
 
+const favoritesButton = document.getElementById("favoritesButton");
+
 const DARK_THEME_CLASS = "darkTheme";
 const THEME_STORAGE_KEY = "clicSellTheme";
 
 let toastTimeout;
+let mostrarSomenteFavoritos = false;
 
 /* ===========================
    TEMA
@@ -29,7 +32,7 @@ let toastTimeout;
 function updateThemeIcon(isDarkTheme) {
   if (isDarkTheme) {
     themeIcon.innerHTML = `
-      <svg viewBox="0 0 24 24">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
         <circle cx="12" cy="12" r="4"></circle>
         <path d="M12 2v2"></path>
         <path d="M12 20v2"></path>
@@ -49,9 +52,13 @@ function updateThemeIcon(isDarkTheme) {
   }
 
   themeIcon.innerHTML = `
-    <svg viewBox="0 0 24 24">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
       <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"></path>
-      <path class="themeSparkle" d="m17.5 3 .5 1.5L19.5 5 18 5.5 17.5 7 17 5.5 15.5 5 17 4.5 17.5 3Z"></path>
+
+      <path
+        class="themeSparkle"
+        d="m17.5 3 .5 1.5L19.5 5 18 5.5 17.5 7 17 5.5 15.5 5 17 4.5 17.5 3Z"
+      ></path>
     </svg>
   `;
 
@@ -81,31 +88,11 @@ function getInitialTheme() {
     return savedTheme;
   }
 
-  const prefersDarkTheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const prefersDarkTheme = window.matchMedia(
+    "(prefers-color-scheme: dark)"
+  ).matches;
 
   return prefersDarkTheme ? "dark" : "light";
-}
-
-/* ===========================
-   CARRINHO
-=========================== */
-
-function abrirCarrinho() {
-  cartDrawer.classList.add("cartDrawerOpen");
-  cartOverlay.classList.add("cartOverlayVisible");
-
-  cartDrawer.setAttribute("aria-hidden", "false");
-
-  document.body.classList.add("cartOpen");
-}
-
-function fecharCarrinho() {
-  cartDrawer.classList.remove("cartDrawerOpen");
-  cartOverlay.classList.remove("cartOverlayVisible");
-
-  cartDrawer.setAttribute("aria-hidden", "true");
-
-  document.body.classList.remove("cartOpen");
 }
 
 /* ===========================
@@ -134,6 +121,10 @@ function normalizarTexto(texto) {
 function exibirToast(mensagem) {
   const toast = document.getElementById("toast");
 
+  if (!toast) {
+    return;
+  }
+
   clearTimeout(toastTimeout);
 
   toast.textContent = mensagem;
@@ -152,7 +143,11 @@ function criarImagemFallback(imagem) {
   const imagemFallback = document.createElement("div");
 
   imagemFallback.className = "produtoImagemFallback";
-  imagemFallback.setAttribute("aria-label", `Imagem indisponível para ${imagem.alt}`);
+
+  imagemFallback.setAttribute(
+    "aria-label",
+    `Imagem indisponível para ${imagem.alt}`
+  );
 
   imagemFallback.innerHTML = `
     <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -169,12 +164,31 @@ function criarImagemFallback(imagem) {
 
 function criarCardProduto(produto) {
   const card = document.createElement("article");
+  const isFavorito = produtoEstaFavoritado(produto.id);
 
   card.className = "produtoCard";
   card.dataset.produtoId = produto.id;
 
   card.innerHTML = `
     <div class="produtoImagemWrapper">
+      <button
+        class="favoriteProductButton ${isFavorito ? "favoriteProductButtonActive" : ""
+    }"
+        type="button"
+        data-favorite-product-id="${produto.id}"
+        aria-label="${isFavorito
+      ? `Remover ${produto.nome} dos favoritos`
+      : `Adicionar ${produto.nome} aos favoritos`
+    }"
+        aria-pressed="${isFavorito}"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path
+            d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z"
+          ></path>
+        </svg>
+      </button>
+
       <img
         class="produtoImagem"
         src="${produto.imagem}"
@@ -252,39 +266,20 @@ function renderizarProdutos(lista) {
   });
 }
 
-function obterProdutosFiltrados() {
-  const termoBusca = normalizarTexto(buscaProdutoInput.value);
-  const categoriaSelecionada = filtroCategoriaSelect.value;
-
-  let produtosFiltrados = produtos.filter((produto) => {
-    const nomeProduto = normalizarTexto(produto.nome);
-    const categoriaProduto = normalizarTexto(produto.categoria);
-
-    const correspondeBusca =
-      nomeProduto.includes(termoBusca) || categoriaProduto.includes(termoBusca);
-
-    const correspondeCategoria =
-      categoriaSelecionada === "todos" ||
-      produto.categoria === categoriaSelecionada;
-
-    return correspondeBusca && correspondeCategoria;
-  });
-
-  produtosFiltrados = ordenarProdutos(produtosFiltrados);
-
-  return produtosFiltrados;
-}
-
 function ordenarProdutos(lista) {
   const produtosOrdenados = [...lista];
 
   switch (ordenacaoProdutosSelect.value) {
     case "menorPreco":
-      produtosOrdenados.sort((produtoA, produtoB) => produtoA.preco - produtoB.preco);
+      produtosOrdenados.sort(
+        (produtoA, produtoB) => produtoA.preco - produtoB.preco
+      );
       break;
 
     case "maiorPreco":
-      produtosOrdenados.sort((produtoA, produtoB) => produtoB.preco - produtoA.preco);
+      produtosOrdenados.sort(
+        (produtoA, produtoB) => produtoB.preco - produtoA.preco
+      );
       break;
 
     case "nomeAsc":
@@ -300,10 +295,42 @@ function ordenarProdutos(lista) {
       break;
 
     default:
-      produtosOrdenados.sort((produtoA, produtoB) => produtoA.id - produtoB.id);
+      produtosOrdenados.sort(
+        (produtoA, produtoB) => produtoA.id - produtoB.id
+      );
   }
 
   return produtosOrdenados;
+}
+
+function obterProdutosFiltrados() {
+  const termoBusca = normalizarTexto(buscaProdutoInput.value);
+  const categoriaSelecionada = filtroCategoriaSelect.value;
+
+  const produtosFiltrados = produtos.filter((produto) => {
+    const nomeProduto = normalizarTexto(produto.nome);
+    const categoriaProduto = normalizarTexto(produto.categoria);
+
+    const correspondeBusca =
+      nomeProduto.includes(termoBusca) ||
+      categoriaProduto.includes(termoBusca);
+
+    const correspondeCategoria =
+      categoriaSelecionada === "todos" ||
+      produto.categoria === categoriaSelecionada;
+
+    const correspondeFavorito =
+      !mostrarSomenteFavoritos ||
+      produtoEstaFavoritado(produto.id);
+
+    return (
+      correspondeBusca &&
+      correspondeCategoria &&
+      correspondeFavorito
+    );
+  });
+
+  return ordenarProdutos(produtosFiltrados);
 }
 
 function atualizarCatalogo() {
@@ -313,7 +340,9 @@ function atualizarCatalogo() {
 }
 
 function preencherCategorias() {
-  const categorias = [...new Set(produtos.map((produto) => produto.categoria))];
+  const categorias = [
+    ...new Set(produtos.map((produto) => produto.categoria))
+  ];
 
   categorias.sort((categoriaA, categoriaB) =>
     categoriaA.localeCompare(categoriaB, "pt-BR")
@@ -327,6 +356,88 @@ function preencherCategorias() {
 
     filtroCategoriaSelect.appendChild(option);
   });
+}
+
+/* ===========================
+   FAVORITOS
+=========================== */
+
+function tratarFavoritoProduto(event) {
+  const botaoFavorito = event.target.closest(
+    "[data-favorite-product-id]"
+  );
+
+  if (!botaoFavorito) {
+    return false;
+  }
+
+  const produtoId = Number(
+    botaoFavorito.dataset.favoriteProductId
+  );
+
+  const produtoSelecionado = produtos.find(
+    (produto) => produto.id === produtoId
+  );
+
+  if (!produtoSelecionado) {
+    return true;
+  }
+
+  const foiFavoritado = alternarFavorito(produtoId);
+
+  atualizarCatalogo();
+
+  exibirToast(
+    foiFavoritado
+      ? `${produtoSelecionado.nome} foi adicionado aos favoritos.`
+      : `${produtoSelecionado.nome} foi removido dos favoritos.`
+  );
+
+  return true;
+}
+
+function alternarFiltroFavoritos() {
+  mostrarSomenteFavoritos = !mostrarSomenteFavoritos;
+
+  favoritesButton.classList.toggle(
+    "favoritesButtonActive",
+    mostrarSomenteFavoritos
+  );
+
+  favoritesButton.setAttribute(
+    "aria-pressed",
+    String(mostrarSomenteFavoritos)
+  );
+
+  atualizarCatalogo();
+
+  exibirToast(
+    mostrarSomenteFavoritos
+      ? "Exibindo somente produtos favoritos."
+      : "Exibindo todos os produtos."
+  );
+}
+
+/* ===========================
+   CARRINHO
+=========================== */
+
+function abrirCarrinho() {
+  cartDrawer.classList.add("cartDrawerOpen");
+  cartOverlay.classList.add("cartOverlayVisible");
+
+  cartDrawer.setAttribute("aria-hidden", "false");
+
+  document.body.classList.add("cartOpen");
+}
+
+function fecharCarrinho() {
+  cartDrawer.classList.remove("cartDrawerOpen");
+  cartOverlay.classList.remove("cartOverlayVisible");
+
+  cartDrawer.setAttribute("aria-hidden", "true");
+
+  document.body.classList.remove("cartOpen");
 }
 
 function selecionarProduto(event) {
@@ -348,46 +459,118 @@ function selecionarProduto(event) {
 
   adicionarAoCarrinho(produtoSelecionado);
 
-  exibirToast(`${produtoSelecionado.nome} foi adicionado ao carrinho.`);
+  exibirToast(
+    `${produtoSelecionado.nome} foi adicionado ao carrinho.`
+  );
 }
 
 /* ===========================
-   EVENTOS
+   EVENTOS DO TEMA
 =========================== */
 
 themeToggle.addEventListener("change", () => {
-  const selectedTheme = themeToggle.checked ? "dark" : "light";
+  const selectedTheme = themeToggle.checked
+    ? "dark"
+    : "light";
 
-  localStorage.setItem(THEME_STORAGE_KEY, selectedTheme);
+  localStorage.setItem(
+    THEME_STORAGE_KEY,
+    selectedTheme
+  );
 
   applyTheme(selectedTheme);
 });
 
-buscaProdutoInput.addEventListener("input", atualizarCatalogo);
-filtroCategoriaSelect.addEventListener("change", atualizarCatalogo);
-ordenacaoProdutosSelect.addEventListener("change", atualizarCatalogo);
+/* ===========================
+   EVENTOS DO CATÁLOGO
+=========================== */
 
-listaProdutos.addEventListener("click", selecionarProduto);
+buscaProdutoInput.addEventListener(
+  "input",
+  atualizarCatalogo
+);
 
-openCartButton.addEventListener("click", abrirCarrinho);
-closeCartButton.addEventListener("click", fecharCarrinho);
-cartOverlay.addEventListener("click", fecharCarrinho);
+filtroCategoriaSelect.addEventListener(
+  "change",
+  atualizarCatalogo
+);
 
-cartItems.addEventListener("click", tratarAcoesCarrinho);
+ordenacaoProdutosSelect.addEventListener(
+  "change",
+  atualizarCatalogo
+);
+
+listaProdutos.addEventListener("click", (event) => {
+  const cliqueEmFavorito = tratarFavoritoProduto(event);
+
+  if (cliqueEmFavorito) {
+    return;
+  }
+
+  selecionarProduto(event);
+});
+
+/* ===========================
+   EVENTOS DOS FAVORITOS
+=========================== */
+
+favoritesButton.addEventListener(
+  "click",
+  alternarFiltroFavoritos
+);
+
+/* ===========================
+   EVENTOS DO CARRINHO
+=========================== */
+
+openCartButton.addEventListener(
+  "click",
+  abrirCarrinho
+);
+
+closeCartButton.addEventListener(
+  "click",
+  fecharCarrinho
+);
+
+cartOverlay.addEventListener(
+  "click",
+  fecharCarrinho
+);
+
+cartItems.addEventListener(
+  "click",
+  tratarAcoesCarrinho
+);
 
 clearCartButton.addEventListener("click", () => {
+  if (carrinho.length === 0) {
+    exibirToast("O carrinho já está vazio.");
+    return;
+  }
+
   limparCarrinho();
+
   exibirToast("Carrinho esvaziado.");
 });
 
 checkoutButton.addEventListener("click", () => {
   if (carrinho.length === 0) {
-    exibirToast("Adicione produtos antes de finalizar a compra.");
+    exibirToast(
+      "Adicione produtos antes de finalizar a compra."
+    );
+
     return;
   }
 
-  exibirToast("Fluxo de checkout será implementado nas próximas etapas.");
+  exibirToast(
+    "Fluxo de checkout será implementado nas próximas etapas."
+  );
 });
+
+/* ===========================
+   EVENTOS GLOBAIS
+=========================== */
 
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
@@ -401,7 +584,12 @@ document.addEventListener("keydown", (event) => {
 
 document.addEventListener("DOMContentLoaded", () => {
   applyTheme(getInitialTheme());
+
   preencherCategorias();
+
   renderizarProdutos(produtos);
+
   atualizarCarrinho();
+
+  atualizarContadorFavoritos();
 });
