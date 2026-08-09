@@ -4,8 +4,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="./assets/favicon/favicon-amarelo.ico">
 
-  <title>ClicSell | Marketplace</title>
+  <link rel="icon" type="image/png" sizes="48x48" href="./assets/favicon/favicon-48x48.png">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon/favicon-32x32.png">
+
+  <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon/favicon-16x16.png">
+  <title>ClicSell</title>
 
   <link rel="stylesheet" href="./css/style.css" />
 </head>
@@ -78,8 +84,57 @@
           </label>
         </div>
       </div>
+    </div>
   </header>
+  <section class="heroCarousel" aria-label="Destaques da ClicSell">
+    <div class="carouselTrack">
 
+      <div class="carouselSlide carouselSlideActive">
+        <picture>
+          <source media="(max-width: 600px) and (orientation: portrait)"
+            srcset="./img/banners/mobile/melhores-produtos-mobile.png">
+
+          <img src="./img/banners/desktop/melhores-produtos.png" alt="Os melhores produtos estão aqui na ClicSell">
+        </picture>
+      </div>
+
+      <div class="carouselSlide">
+        <picture>
+          <source media="(max-width: 600px) and (orientation: portrait)"
+            srcset="./img/banners/mobile/frete-gratis-mobile.png">
+
+          <img src="./img/banners/desktop/frete-gratis.png" alt="Frete grátis na ClicSell">
+        </picture>
+      </div>
+
+      <div class="carouselSlide">
+        <picture>
+          <source media="(max-width: 600px) and (orientation: portrait)"
+            srcset="./img/banners/mobile/entregas-mobile.png">
+
+          <img src="./img/banners/desktop/entregas.png" alt="Entregas ClicSell para todo o Brasil">
+        </picture>
+      </div>
+
+    </div>
+
+    <button class="carouselButton carouselButtonPrev" type="button" aria-label="Banner anterior">
+      &#10094;
+    </button>
+
+    <button class="carouselButton carouselButtonNext" type="button" aria-label="Próximo banner">
+      &#10095;
+    </button>
+
+    <div class="carouselIndicators" aria-label="Selecionar banner">
+      <button class="carouselIndicator carouselIndicatorActive" type="button" aria-label="Mostrar banner 1"
+        data-slide="0"></button>
+
+      <button class="carouselIndicator" type="button" aria-label="Mostrar banner 2" data-slide="1"></button>
+
+      <button class="carouselIndicator" type="button" aria-label="Mostrar banner 3" data-slide="2"></button>
+    </div>
+  </section>
   <main class="container mainContent">
     <section id="catalogo" class="panel">
       <div class="sectionHeader">
@@ -313,9 +368,10 @@
 
   <script src="./js/catalogo.js"></script>
   <script src="./js/desconto.js"></script>
-  <script src="./js/cep.js"></script>
   <script src="./js/carrinho.js"></script>
   <script src="./js/favoritos.js"></script>
+  <script src="./js/carrossel.js"></script>
+  <script src="./js/cep.js"></script>
   <script src="./js/main.js"></script>
 </body>
 
