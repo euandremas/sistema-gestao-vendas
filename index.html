@@ -20,24 +20,26 @@
   <header class="header">
     <div class="container headerContent">
       <div class="brand">
-        <div class="brandIcon" aria-hidden="true">
-          <svg viewBox="0 0 24 24">
-            <path d="m4 3 7.5 17 2.2-6.1 6.3-2.2L4 3Z" />
-            <path d="M15 3v3" />
-            <path d="M20.5 6.5 18 9" />
-            <path d="M18 15h3" />
-          </svg>
-        </div>
+        <div class="brandIdentity">
+          <h1 class="brandLogoTitle">
+            <img src="./img/brand/logo-clicsell.png" alt="ClicSell" class="headerLogo">
+          </h1>
 
-        <div>
-          <h1>ClicSell</h1>
-          <p class="brandSlogan">
-            É só clicar e comprar.
-          </p>
+          <div class="brandCopy">
+            <p class="brandSlogan">
+              É só clicar e comprar.
+            </p>
 
-          <p class="brandDescription">
-            Gerencie produtos, calcule descontos e consulte entregas com rapidez.
-          </p>
+            <p class="brandDescription">
+              Ofertas, entrega rápida e pagamento seguro em um só lugar.
+            </p>
+
+            <div class="brandHighlights" aria-label="Diferenciais da ClicSell">
+              <span>Entrega rápida</span>
+              <span>Compra segura</span>
+              <span>Ofertas especiais</span>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -193,7 +195,9 @@
         <p>Os produtos serão exibidos aqui.</p>
       </div>
     </section>
-
+    <section class="institutionalCta">
+      <img src="./img/institucionais/melhores-produtos-cta.png" alt="ClicSell - melhores produtos é só aqui">
+    </section>
     <section id="desconto" class="panel">
       <div class="sectionHeader">
         <div class="sectionIcon sectionIconPurple" aria-hidden="true">
@@ -312,6 +316,21 @@
         <p>O endereço será exibido aqui.</p>
       </div>
     </section>
+    <section id="seguranca" class="paymentSecurity" aria-labelledby="paymentSecurityTitle">
+      <div class="paymentSecurityHeader">
+        <div>
+          <h2 id="paymentSecurityTitle">Compra segura</h2>
+          <p>Escolha sua forma de pagamento e compre com tranquilidade.</p>
+        </div>
+      </div>
+
+      <picture class="paymentSecurityImage">
+        <source media="(max-width: 600px)" srcset="./img/pagamentos/checkout-seguro-mobile.png">
+
+        <img src="./img/pagamentos/checkout-seguro.png"
+          alt="Compra segura e formas de pagamento disponíveis na ClicSell">
+      </picture>
+    </section>
   </main>
   <div id="cartOverlay" class="cartOverlay"></div>
 
@@ -359,10 +378,29 @@
     </div>
   </aside>
   <footer class="footer">
-    <p>
-      Projeto desenvolvido para a disciplina Back-end Development.
-      <span aria-hidden="true">♥</span>
-    </p>
+    <div class="container footerContent">
+      <div class="footerBrand">
+        <img src="./img/brand/logo-clicsell.png" alt="ClicSell" class="footerLogo">
+
+        <p>É só clicar e comprar.</p>
+      </div>
+
+      <nav class="footerNavigation" aria-label="Navegação do rodapé">
+        <a href="#catalogo">Produtos</a>
+        <a href="#desconto">Descontos</a>
+        <a href="#cep">Entregas</a>
+        <a href="#seguranca">Compra segura</a>
+      </nav>
+    </div>
+
+    <div class="footerBottom">
+      <div class="container">
+        <p>
+          Projeto desenvolvido para a disciplina Back-end Development.
+          <span aria-hidden="true">♥</span>
+        </p>
+      </div>
+    </div>
   </footer>
   <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
 
