@@ -329,7 +329,7 @@ LINK_DO_VIDEO_AQUI
 🔗 Repositório
 
 GitHub:
-LINK_DO_REPOSITORIO_AQUI
+https://github.com/euandremas/sistema-gestao-vendas
 
 👨‍💻 Autor
 
