@@ -1,6 +1,10 @@
-# 🛒 ClicSell
+<p align="center">
+  <img src="./img/brand/logo-clicsell.png" alt="ClicSell" width="420">
+</p>
 
-> **É só clicar e comprar.**
+<p align="center">
+  <strong>É só clicar e comprar.</strong>
+</p>
 
 A **ClicSell** é uma aplicação web desenvolvida como parte da disciplina **Back-end Development**, com o objetivo de simular um sistema de gestão de vendas e uma experiência de e-commerce.
 
