@@ -328,7 +328,8 @@ A atividade tem como objetivo aplicar conceitos de desenvolvimento web, organiza
 Demonstração da aplicação:
 
 YouTube:
-LINK_DO_VIDEO_AQUI
+
+https://youtu.be/4xG87R2CX1c
 
 🔗 Repositório
 
