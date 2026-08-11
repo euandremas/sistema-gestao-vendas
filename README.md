@@ -335,6 +335,13 @@ LINK_DO_VIDEO_AQUI
 GitHub:
 https://github.com/euandremas/sistema-gestao-vendas
 
+
+## 🌐 Aplicação online
+
+Acesse a ClicSell pelo GitHub Pages:
+
+https://euandremas.github.io/sistema-gestao-vendas/
+
 👨‍💻 Autor
 
 André Moreira Araújo dos Santos
