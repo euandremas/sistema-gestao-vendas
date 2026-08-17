@@ -7,6 +7,11 @@ const {
     calcularMediaPrecos
 } = require("./services/produtoService");
 
+const {
+    listarPedidos,
+    criarPedido
+} = require("./services/pedidoService");
+
 const terminal = readline.createInterface({ input, output });
 
 function exibirCabecalho() {
@@ -19,6 +24,8 @@ function exibirMenu() {
     console.log("\n1 - Cadastrar produto");
     console.log("2 - Listar produtos");
     console.log("3 - Calcular média de preços");
+    console.log("4 - Criar pedido");
+    console.log("5 - Listar pedidos");
     console.log("0 - Sair");
 }
 
@@ -73,6 +80,76 @@ async function exibirMediaPrecos() {
     console.log(`R$ ${media.toFixed(2)}`);
 }
 
+async function criarPedidoTerminal() {
+    const produtos = await listarProdutos();
+
+    if (!produtos.length) {
+        console.log("\nNenhum produto disponível para criar um pedido.");
+        return;
+    }
+
+    console.log("\n--- Novo Pedido ---");
+
+    const cliente = await terminal.question("Cliente: ");
+
+    console.log("\nProdutos disponíveis:");
+
+    produtos.forEach((produto) => {
+        console.log(
+            `${produto.id} - ${produto.nome} | R$ ${Number(produto.preco).toFixed(2)}`
+        );
+    });
+
+    const idProduto = Number(
+        await terminal.question("\nID do produto: ")
+    );
+
+    const produto = produtos.find(
+        (item) => item.id === idProduto
+    );
+
+    if (!produto) {
+        throw new Error("Produto não encontrado.");
+    }
+
+    const quantidade = Number(
+        await terminal.question("Quantidade: ")
+    );
+
+    const pedido = await criarPedido({
+        cliente,
+        itens: [
+            {
+                id: produto.id,
+                nome: produto.nome,
+                preco: produto.preco,
+                quantidade
+            }
+        ],
+        endereco: null
+    });
+
+    console.log("\nPedido cadastrado com sucesso!");
+    console.log(pedido.obterResumo());
+}
+
+async function exibirPedidos() {
+    const pedidos = await listarPedidos();
+
+    console.log("\n--- Pedidos Cadastrados ---");
+
+    if (!pedidos.length) {
+        console.log("Nenhum pedido cadastrado.");
+        return;
+    }
+
+    pedidos.forEach((pedido) => {
+        console.log(
+            `Pedido ${pedido.id} - ${pedido.cliente} | ${pedido.itens.length} item(ns) | Total: R$ ${Number(pedido.total).toFixed(2)}`
+        );
+    });
+}
+
 async function iniciar() {
     let executando = true;
 
@@ -95,6 +172,14 @@ async function iniciar() {
 
                 case "3":
                     await exibirMediaPrecos();
+                    break;
+
+                case "4":
+                    await criarPedidoTerminal();
+                    break;
+
+                case "5":
+                    await exibirPedidos();
                     break;
 
                 case "0":
