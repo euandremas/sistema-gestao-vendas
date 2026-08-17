@@ -582,8 +582,10 @@ document.addEventListener("keydown", (event) => {
    INICIALIZAÇÃO
 =========================== */
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   applyTheme(getInitialTheme());
+
+  await carregarProdutos();
 
   preencherCategorias();
 

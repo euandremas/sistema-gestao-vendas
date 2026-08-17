@@ -1,86 +1,18 @@
-const produtos = [
-    {
-        id: 1,
-        nome: "Notebook Dell Inspiron",
-        categoria: "Informática",
-        preco: 4299.9,
-        imagem: "./img/produtos/notebook.jpg"
-    },
-    {
-        id: 2,
-        nome: "Samsung Galaxy S25",
-        categoria: "Smartphones",
-        preco: 4599.9,
-        imagem: "./img/produtos/smartphone.jpg"
-    },
-    {
-        id: 3,
-        nome: "Apple iPhone 16",
-        categoria: "Smartphones",
-        preco: 6799.9,
-        imagem: "./img/produtos/iphone.jpg"
-    },
-    {
-        id: 4,
-        nome: "Headset HyperX Cloud III",
-        categoria: "Áudio",
-        preco: 649.9,
-        imagem: "./img/produtos/headset.jpg"
-    },
-    {
-        id: 5,
-        nome: "Teclado Mecânico Logitech",
-        categoria: "Periféricos",
-        preco: 549.9,
-        imagem: "./img/produtos/teclado.jpg"
-    },
-    {
-        id: 6,
-        nome: "Mouse Logitech G502",
-        categoria: "Periféricos",
-        preco: 399.9,
-        imagem: "./img/produtos/mouse.jpg"
-    },
-    {
-        id: 7,
-        nome: "Monitor LG UltraWide",
-        categoria: "Monitores",
-        preco: 1899.9,
-        imagem: "./img/produtos/monitor.jpg"
-    },
-    {
-        id: 8,
-        nome: "Samsung Galaxy Watch",
-        categoria: "Wearables",
-        preco: 1599.9,
-        imagem: "./img/produtos/smartwatch.jpg"
-    },
-    {
-        id: 9,
-        nome: "Controle Xbox Series",
-        categoria: "Games",
-        preco: 499.9,
-        imagem: "./img/produtos/controle.jpg"
-    },
-    {
-        id: 10,
-        nome: "SSD Kingston NV2 1 TB",
-        categoria: "Armazenamento",
-        preco: 449.9,
-        imagem: "./img/produtos/ssd.jpg"
-    },
-    {
-        id: 11,
-        nome: "Câmera Canon EOS R50",
-        categoria: "Fotografia",
-        preco: 4899.9,
-        imagem: "./img/produtos/camera.jpg"
-    },
-    {
-        id: 12,
-        nome: "Roteador TP-Link Wi-Fi 6",
-        categoria: "Redes",
-        preco: 479.9,
-        imagem: "./img/produtos/roteador.jpg"
+let produtos = [];
+
+async function carregarProdutos() {
+    try {
+        const resposta = await fetch("./data/produtos.json");
+
+        if (!resposta.ok) {
+            throw new Error("Não foi possível carregar os produtos.");
+        }
+
+        produtos = await resposta.json();
+
+        return produtos;
+    } catch (erro) {
+        console.error(`Erro ao carregar catálogo: ${erro.message}`);
+        return [];
     }
-];
+}
