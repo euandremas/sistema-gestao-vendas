@@ -236,7 +236,7 @@ SISTEMA-GESTAO-VENDAS/
 │
 ├── index.html
 └── README.md
-
+``` 
 🧩 Organização do JavaScript
 
 O JavaScript foi separado por responsabilidade para facilitar a leitura e manutenção do projeto.
@@ -342,6 +342,316 @@ https://github.com/euandremas/sistema-gestao-vendas
 Acesse a ClicSell pelo GitHub Pages:
 
 https://euandremas.github.io/sistema-gestao-vendas/
+
+---
+
+# 🚀 Atividade 2 — Evolução Back-end
+
+Na Atividade 2, a ClicSell foi evoluída a partir do projeto desenvolvido na Atividade 1, adicionando recursos de back-end com Node.js, Programação Orientada a Objetos, persistência em arquivos JSON e operações assíncronas.
+
+O front-end desenvolvido anteriormente foi preservado e integrado à nova estrutura de dados do projeto.
+
+## 🆕 Funcionalidades adicionadas
+
+Nesta etapa foram implementados:
+
+- back-end com Node.js;
+- menu interativo no terminal;
+- cadastro de produtos pelo terminal;
+- listagem de produtos cadastrados;
+- cálculo da média de preços;
+- criação e listagem de pedidos;
+- persistência de produtos em JSON;
+- persistência de pedidos em JSON;
+- integração do catálogo front-end com o arquivo de produtos;
+- consulta de CEP pelo back-end;
+- integração do endereço consultado ao pedido;
+- validação de preço;
+- validação de quantidade;
+- validação de CEP;
+- tratamento de erros;
+- uso de Promises e Async/Await;
+- Programação Orientada a Objetos;
+- herança e polimorfismo.
+
+## 🏗️ Estrutura adicionada na Atividade 2
+
+```text
+SISTEMA-GESTAO-VENDAS/
+│
+├── backend/
+│   ├── models/
+│   │   ├── Entidade.js
+│   │   ├── Produto.js
+│   │   └── Pedido.js
+│   │
+│   ├── services/
+│   │   ├── cepService.js
+│   │   ├── produtoService.js
+│   │   └── pedidoService.js
+│   │
+│   ├── utils/
+│   │   └── arquivo.js
+│   │
+│   └── app.js
+│
+├── data/
+│   ├── produtos.json
+│   └── pedidos.json
+│
+├── css/
+├── img/
+├── js/
+├── index.html
+├── package.json
+└── README.md
+```
+
+▶️ Executando o back-end
+Pré-requisitos
+
+É necessário possuir o Node.js instalado.
+
+A versão utilizada durante o desenvolvimento foi:
+
+Node.js v22.18.0
+npm 10.9.3
+Iniciar o back-end
+
+Na raiz do projeto, execute:
+
+```bash
+npm start
+```
+
+O comando executa:
+
+```bash
+node backend/app.js
+```
+```text    
+================================
+       ClicSell - Back-end
+================================
+
+
+1 - Cadastrar produto
+2 - Listar produtos
+3 - Calcular média de preços
+4 - Criar pedido
+5 - Listar pedidos
+6 - Consultar CEP
+0 - Sair
+```
+
+📦 Gerenciamento de produtos
+
+Os produtos são persistidos no arquivo:
+
+data/produtos.json
+
+Através do terminal é possível:
+
+cadastrar um novo produto;
+listar os produtos cadastrados;
+calcular a média dos preços.
+
+Ao cadastrar um produto, um novo ID é gerado automaticamente e os dados são persistidos no arquivo JSON.
+
+🔄 Integração front-end e back-end
+
+O catálogo da ClicSell deixou de utilizar uma lista de produtos fixa diretamente no JavaScript.
+
+O arquivo:
+
+js/catalogo.js
+
+carrega os produtos de:
+
+data/produtos.json
+
+utilizando fetch e async/await.
+
+O fluxo ficou:
+
+```text
+Terminal Node.js
+      ↓
+Cadastro de produto
+      ↓
+produtoService.js
+      ↓
+data/produtos.json
+      ↓
+fetch() no front-end
+      ↓
+Catálogo da ClicSell
+```
+
+Dessa forma, um produto cadastrado pelo terminal passa a fazer parte da fonte de dados utilizada pelo catálogo da aplicação.
+
+🧱 Programação Orientada a Objetos
+
+Foi criada a classe base:
+
+Entidade
+
+As classes:
+
+Produto
+Pedido
+
+herdam de Entidade.
+
+Estrutura:
+```text 
+Entidade
+├── Produto
+└── Pedido
+```
+As duas classes implementam o método:
+
+`obterResumo()`
+
+com comportamentos diferentes.
+
+Isso demonstra o uso de polimorfismo, pois o mesmo método possui implementações específicas de acordo com o tipo do objeto.
+
+✅ Validações
+Produto
+
+São validados:
+
+nome obrigatório;
+categoria obrigatória;
+preço numérico;
+preço maior que zero.
+Pedido
+
+São validados:
+
+nome do cliente;
+existência de produtos;
+preço dos itens;
+quantidade inteira;
+quantidade maior que zero.
+CEP
+
+São validados:
+
+quantidade de dígitos;
+CEP existente;
+resposta da API externa.
+
+Dados inválidos não são persistidos nos arquivos JSON.
+
+📍 Consulta de CEP no back-end
+
+A consulta de CEP também foi implementada no Node.js utilizando:
+
+`fetch()`
+`async/await`
+
+O serviço está localizado em:
+
+backend/services/cepService.js
+
+Quando um pedido é criado, o CEP de entrega é consultado e o endereço retornado é armazenado junto ao pedido.
+
+Exemplo:
+
+```json
+{
+  "endereco": {
+    "cep": "01001-000",
+    "logradouro": "Praça da Sé",
+    "complemento": "lado ímpar",
+    "bairro": "Sé",
+    "cidade": "São Paulo",
+    "uf": "SP"
+  }
+}
+```
+
+💾 Persistência de dados
+
+A leitura e escrita dos arquivos utiliza o módulo nativo:
+
+`fs/promises`
+
+As operações são assíncronas e utilizam async/await.
+
+Os dados são persistidos em:
+
+`data/produtos.json`
+`data/pedidos.json`
+
+🧾 Pedidos
+
+Pelo terminal é possível criar pedidos escolhendo:
+
+cliente;
+produto;
+quantidade;
+CEP de entrega.
+
+O sistema calcula automaticamente o valor total e salva o pedido no arquivo JSON.
+
+Também é possível listar todos os pedidos cadastrados através do menu.
+
+🧪 Testes realizados na Atividade 2
+
+Foram testados:
+
+inicialização do Node.js;
+execução através de npm start;
+cadastro de produto válido;
+bloqueio de produto com preço inválido;
+listagem de produtos;
+cálculo da média de preços;
+persistência dos produtos;
+criação de pedido válido;
+bloqueio de quantidade zero;
+bloqueio de quantidade decimal;
+persistência dos pedidos;
+listagem dos pedidos;
+consulta de CEP válido;
+consulta de CEP com quantidade inválida de dígitos;
+consulta de CEP inexistente;
+integração do CEP ao pedido;
+tratamento de erros sem encerramento da aplicação;
+carregamento do catálogo através do JSON;
+cadastro de produto pelo terminal e exibição no front-end.
+🛠️ Tecnologias adicionadas nesta etapa
+Node.js
+npm
+JavaScript
+JSON
+File System (fs/promises)
+Promises
+Async/Await
+Fetch API
+Programação Orientada a Objetos
+Git
+GitHub
+
+🎯 Objetivo acadêmico da Atividade 2
+
+Esta etapa teve como objetivo evoluir a ClicSell com conceitos de desenvolvimento back-end utilizando Node.js, Programação Orientada a Objetos, armazenamento e manipulação de dados e operações assíncronas.
+
+A implementação utiliza classes, herança, polimorfismo, validações, arquivos JSON, interação via terminal e integração com uma API externa de CEP.
+
+🎥 Vídeo da Atividade 2
+
+O link da apresentação da Atividade 2 será adicionado após a gravação.
+
+🌿 Desenvolvimento com Git
+
+A Atividade 2 foi desenvolvida em uma branch específica:
+
+`atividade-2`
+
+A branch main permaneceu preservada com a versão entregue da Atividade 1 durante o desenvolvimento desta etapa.
 
 👨‍💻 Autor
 
