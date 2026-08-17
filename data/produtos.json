@@ -1,0 +1,9 @@
+[
+  {
+    "id": 1,
+    "nome": "Notebook Dell Inspiron",
+    "categoria": "Informática",
+    "preco": 4299.9,
+    "imagem": "./img/produtos/notebook.jpg"
+  }
+]
