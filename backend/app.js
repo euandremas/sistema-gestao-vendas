@@ -12,6 +12,10 @@ const {
     criarPedido
 } = require("./services/pedidoService");
 
+const { buscarCep
+
+} = require("./services/cepService");
+
 const terminal = readline.createInterface({ input, output });
 
 function exibirCabecalho() {
@@ -26,6 +30,7 @@ function exibirMenu() {
     console.log("3 - Calcular média de preços");
     console.log("4 - Criar pedido");
     console.log("5 - Listar pedidos");
+    console.log("6 - Consultar CEP");
     console.log("0 - Sair");
 }
 
@@ -116,6 +121,9 @@ async function criarPedidoTerminal() {
         await terminal.question("Quantidade: ")
     );
 
+    const cep = await terminal.question("CEP de entrega: ");
+    const endereco = await buscarCep(cep);
+
     const pedido = await criarPedido({
         cliente,
         itens: [
@@ -126,11 +134,14 @@ async function criarPedidoTerminal() {
                 quantidade
             }
         ],
-        endereco: null
+        endereco
     });
 
     console.log("\nPedido cadastrado com sucesso!");
     console.log(pedido.obterResumo());
+    console.log(
+        `Entrega: ${endereco.logradouro || "Logradouro não informado"}, ${endereco.bairro || "Bairro não informado"} - ${endereco.cidade}/${endereco.uf}`
+    );
 }
 
 async function exibirPedidos() {
@@ -148,6 +159,21 @@ async function exibirPedidos() {
             `Pedido ${pedido.id} - ${pedido.cliente} | ${pedido.itens.length} item(ns) | Total: R$ ${Number(pedido.total).toFixed(2)}`
         );
     });
+}
+
+async function consultarCepTerminal() {
+    console.log("\n--- Consulta de CEP ---");
+
+    const cep = await terminal.question("CEP: ");
+    const endereco = await buscarCep(cep);
+
+    console.log("\n--- Endereço Encontrado ---");
+    console.log(`CEP: ${endereco.cep}`);
+    console.log(`Logradouro: ${endereco.logradouro || "Não informado"}`);
+    console.log(`Complemento: ${endereco.complemento || "Não informado"}`);
+    console.log(`Bairro: ${endereco.bairro || "Não informado"}`);
+    console.log(`Cidade: ${endereco.cidade}`);
+    console.log(`UF: ${endereco.uf}`);
 }
 
 async function iniciar() {
@@ -180,6 +206,10 @@ async function iniciar() {
 
                 case "5":
                     await exibirPedidos();
+                    break;
+
+                case "6":
+                    await consultarCepTerminal();
                     break;
 
                 case "0":

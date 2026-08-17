@@ -10,7 +10,14 @@
         "quantidade": 1
       }
     ],
-    "endereco": null,
+    "endereco": {
+      "cep": "07840-135",
+      "logradouro": "Avenida Diadema",
+      "complemento": "",
+      "bairro": "Jardim União",
+      "cidade": "Franco da Rocha",
+      "uf": "SP"
+    },
     "total": 4299.9
   }
 ]
