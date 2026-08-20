@@ -1,10 +1,12 @@
 {
   "name": "sistema-gestao-vendas",
   "version": "1.0.0",
-  "description": "Sistema de Gestão de Vendas da ClicSell - Atividade 2 de Back-end Development.",
-  "main": "backend/app.js",
+  "description": "Sistema de Gestão de Vendas da ClicSell - Atividade 3 de Back-end Development.",
+  "main": "backend/server.js",
   "scripts": {
-    "start": "node backend/app.js"
+    "start": "node backend/server.js",
+    "dev": "nodemon backend/server.js",
+    "cli": "node backend/cli.js"
   },
   "repository": {
     "type": "git",
@@ -20,5 +22,11 @@
   "bugs": {
     "url": "https://github.com/euandremas/sistema-gestao-vendas/issues"
   },
-  "homepage": "https://github.com/euandremas/sistema-gestao-vendas#readme"
+  "homepage": "https://github.com/euandremas/sistema-gestao-vendas#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
 }
