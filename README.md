@@ -643,7 +643,7 @@ A implementação utiliza classes, herança, polimorfismo, validações, arquivo
 
 🎥 Vídeo da Atividade 2
 
-O link da apresentação da Atividade 2 será adicionado após a gravação.
+[(https://youtu.be/fAvv-jqzh10)](https://youtu.be/fAvv-jqzh10)
 
 🌿 Desenvolvimento com Git
 
