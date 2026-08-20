@@ -649,7 +649,7 @@ A implementação utiliza classes, herança, polimorfismo, validações, arquivo
 
 A Atividade 2 foi desenvolvida em uma branch específica:
 
-`atividade-2`
+[`atividade-2`](https://github.com/euandremas/sistema-gestao-vendas/tree/atividade-2)
 
 A branch main permaneceu preservada com a versão entregue da Atividade 1 durante o desenvolvimento desta etapa.
 
