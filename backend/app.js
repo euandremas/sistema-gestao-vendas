@@ -1,10 +1,12 @@
 const express = require("express");
 const path = require("path");
-
+const produtoRoutes = require("./routes/produtoRoutes");
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use("/api/produtos", produtoRoutes);
 
 app.use("/assets", express.static(path.join(__dirname, "../assets")));
 app.use("/css", express.static(path.join(__dirname, "../css")));
